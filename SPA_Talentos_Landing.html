@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SPA Talentos — Emprego em São Pedro da Aldeia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:    #08213E;
+  --blue:    #1260AA;
+  --blue-mid:#1A7FD4;
+  --gold:    #E9A23B;
+  --gold-lt: #FDF3E0;
+  --sand:    #F4EFE6;
+  --white:   #FFFFFF;
+  --text:    #0D1F33;
+  --muted:   #5A7087;
+  --border:  rgba(18,96,170,.12);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'Plus Jakarta Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  background: rgba(8,33,62,.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.logo-badge {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue-mid), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 17px; color: #fff;
+  box-shadow: 0 2px 12px rgba(26,127,212,.4);
+}
+.logo-text { display: flex; flex-direction: column; }
+.logo-name {
+  font-family: var(--serif); font-size: 16px; color: #fff;
+  line-height: 1;
+}
+.logo-city {
+  font-size: 10px; color: rgba(255,255,255,.5);
+  letter-spacing: .06em; text-transform: uppercase;
+  font-weight: 500; margin-top: 2px;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.65);
+  text-decoration: none; letter-spacing: .01em;
+  transition: color .2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  display: flex; align-items: center; gap: 10px;
+}
+.btn-outline-nav {
+  padding: 8px 18px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: transparent; color: rgba(255,255,255,.85);
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .2s; text-decoration: none;
+}
+.btn-outline-nav:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+.btn-solid-nav {
+  padding: 8px 20px; border-radius: 8px;
+  background: var(--gold); color: var(--navy);
+  font-family: var(--sans); font-size: 13px; font-weight: 700;
+  border: none; cursor: pointer; transition: all .2s;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(233,162,59,.35);
+}
+.btn-solid-nav:hover { background: #f0ad44; transform: translateY(-1px); }
+
+/* ── HERO ────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; align-items: center;
+  padding: 68px 5vw 0;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.hero-circle-1 {
+  position: absolute;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,127,212,.18) 0%, transparent 70%);
+  top: -200px; right: -100px;
+  animation: pulse 8s ease-in-out infinite;
+}
+.hero-circle-2 {
+  position: absolute;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(233,162,59,.1) 0%, transparent 70%);
+  bottom: 0; left: -100px;
+  animation: pulse 10s ease-in-out infinite reverse;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.08); opacity: .7; }
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 60px;
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  padding: 100px 0 80px;
+}
+.hero-left { max-width: 580px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 100px;
+  border: 1px solid rgba(233,162,59,.35);
+  background: rgba(233,162,59,.08);
+  font-size: 12px; font-weight: 600; color: var(--gold);
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: fadeUp .6s ease both;
+}
+.hero-tag-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  animation: blink 2s ease infinite;
+}
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(42px, 5.5vw, 72px);
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 24px;
+  animation: fadeUp .6s .1s ease both;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-sub {
+  font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.6);
+  margin-bottom: 40px;
+  animation: fadeUp .6s .2s ease both;
+  max-width: 480px;
+}
+.hero-btns {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  animation: fadeUp .6s .3s ease both;
+}
+.btn-primary {
+  padding: 15px 30px; border-radius: 12px;
+  background: var(--gold); color: var(--navy);
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(233,162,59,.4);
+  transition: all .25s; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #f0b04a; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(233,162,59,.45); }
+.btn-secondary {
+  padding: 15px 30px; border-radius: 12px;
+  background: rgba(255,255,255,.08); color: rgba(255,255,255,.9);
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  border: 1px solid rgba(255,255,255,.15); cursor: pointer;
+  transition: all .25s; text-decoration: none;
+}
+.btn-secondary:hover { background: rgba(255,255,255,.13); }
+.hero-right {
+  display: flex; flex-direction: column; gap: 16px;
+  animation: fadeUp .6s .35s ease both;
+}
+.hero-card {
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all .3s;
+}
+.hero-card:hover { background: rgba(255,255,255,.09); transform: translateX(-4px); }
+.hero-card-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
+}
+.hero-card-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.icon-blue  { background: rgba(26,127,212,.25); }
+.icon-gold  { background: rgba(233,162,59,.25); }
+.icon-teal  { background: rgba(32,178,130,.25); }
+.hero-card-title {
+  font-size: 14px; font-weight: 700; color: #fff;
+}
+.hero-card-sub {
+  font-size: 12px; color: rgba(255,255,255,.45); margin-top: 1px;
+}
+.hero-card-body {
+  font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6;
+}
+.hero-card-tag {
+  display: inline-block; margin-top: 10px;
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: .04em;
+}
+.tag-blue  { background: rgba(26,127,212,.2); color: #6ab4f5; }
+.tag-gold  { background: rgba(233,162,59,.2); color: var(--gold); }
+.tag-green { background: rgba(32,178,130,.2); color: #4ecfa0; }
+
+/* ── STATS ───────────────────────────────────────────────────── */
+.stats-bar {
+  background: var(--gold);
+  padding: 0 5vw;
+}
+.stats-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.stat-item {
+  padding: 28px 0;
+  text-align: center;
+  border-right: 1px solid rgba(8,33,62,.12);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--serif); font-size: 36px; color: var(--navy);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 12px; font-weight: 600; color: rgba(8,33,62,.6);
+  margin-top: 5px; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* ── SECTIONS COMMON ─────────────────────────────────────────── */
+section { padding: 100px 5vw; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 100px;
+  background: var(--gold-lt); color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.section-h2 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1; color: var(--navy);
+  margin-bottom: 18px; max-width: 640px;
+}
+.section-h2 em { font-style: italic; color: var(--blue); }
+.section-sub {
+  font-size: 16px; line-height: 1.75; color: var(--muted);
+  max-width: 540px; margin-bottom: 56px;
+}
+.section-center { text-align: center; }
+.section-center .section-h2 { margin-left: auto; margin-right: auto; }
+.section-center .section-sub { margin-left: auto; margin-right: auto; }
+
+/* ── COMO FUNCIONA ───────────────────────────────────────────── */
+.como {
+  background: var(--sand);
+}
+.como-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.como-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px 30px;
+  border: 1px solid var(--border);
+  position: relative;
+  transition: all .3s;
+}
+.como-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(8,33,62,.1); }
+.como-num {
+  font-family: var(--serif);
+  font-size: 64px; color: rgba(18,96,170,.07);
+  line-height: 1; position: absolute; top: 20px; right: 24px;
+}
+.como-icon-wrap {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(18,96,170,.3);
+}
+.como-h3 {
+  font-size: 19px; font-weight: 700; color: var(--navy);
+  margin-bottom: 10px;
+}
+.como-p {
+  font-size: 14px; line-height: 1.75; color: var(--muted);
+}
+.como-pill {
+  display: inline-block; margin-top: 18px;
+  padding: 5px 14px; border-radius: 100px;
+  background: var(--gold-lt); color: var(--gold);
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+}
+
+/* ── PARA QUEM ───────────────────────────────────────────────── */
+.para-quem { background: var(--white); }
+.pq-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.pq-card {
+  border-radius: 20px;
+  padding: 36px 30px;
+  position: relative; overflow: hidden;
+  transition: all .3s;
+  cursor: default;
+}
+.pq-card:hover { transform: translateY(-4px); }
+.pq-card-blue  { background: var(--navy); }
+.pq-card-sand  { background: var(--sand); border: 1px solid var(--border); }
+.pq-card-blue2 { background: var(--blue); }
+.pq-deco {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  opacity: .06; top: -40px; right: -40px;
+}
+.pq-deco-w { background: #fff; }
+.pq-deco-b { background: var(--blue); }
+.pq-who {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.who-navy  { color: rgba(255,255,255,.4); }
+.who-sand  { color: var(--muted); }
+.who-blue2 { color: rgba(255,255,255,.5); }
+.pq-emoji { font-size: 20px; }
+.pq-h3 {
+  font-family: var(--serif); font-size: 26px; line-height: 1.15;
+  margin-bottom: 14px;
+}
+.pq-h3-white { color: #fff; }
+.pq-h3-dark  { color: var(--navy); }
+.pq-list {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+}
+.pq-list li {
+  font-size: 13px; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.pq-list li::before {
+  content: '';
+  width: 5px; height: 5px; border-radius: 50%;
+  margin-top: 6px; flex-shrink: 0;
+}
+.li-white  { color: rgba(255,255,255,.65); }
+.li-white li::before  { background: var(--gold); }
+.li-dark   { color: var(--muted); }
+.li-dark li::before   { background: var(--blue); }
+.li-white2 { color: rgba(255,255,255,.8); }
+.li-white2 li::before { background: rgba(255,255,255,.5); }
+.pq-cta {
+  margin-top: 24px; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  transition: gap .2s;
+}
+.pq-cta:hover { gap: 10px; }
+.cta-white { color: var(--gold); }
+.cta-blue  { color: var(--blue); }
+.cta-bluew { color: rgba(255,255,255,.9); }
+
+/* ── DIFERENCIAIS ────────────────────────────────────────────── */
+.diferenciais { background: var(--navy); }
+.dif-header { max-width: 1200px; margin: 0 auto 60px; }
+.dif-header .section-h2 { color: #fff; }
+.dif-header .section-sub { color: rgba(255,255,255,.45); }
+.dif-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.dif-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px; padding: 30px 28px;
+  display: flex; gap: 20px; align-items: flex-start;
+  transition: all .3s;
+}
+.dif-card:hover { background: rgba(255,255,255,.07); transform: translateY(-3px); }
+.dif-icon {
+  width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.dif-icon-gold  { background: rgba(233,162,59,.2); }
+.dif-icon-blue  { background: rgba(26,127,212,.2); }
+.dif-icon-teal  { background: rgba(32,178,130,.2); }
+.dif-icon-purple{ background: rgba(147,112,219,.2); }
+.dif-h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.dif-p  { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,.45); }
+
+/* ── PRINCIPIO ───────────────────────────────────────────────── */
+.principio {
+  background: var(--gold);
+  padding: 80px 5vw;
+  text-align: center;
+}
+.principio-inner { max-width: 780px; margin: 0 auto; }
+.principio-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(8,33,62,.5);
+  margin-bottom: 20px;
+}
+.principio-quote {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 44px);
+  line-height: 1.2; color: var(--navy);
+  margin-bottom: 24px;
+}
+.principio-sub {
+  font-size: 16px; line-height: 1.7; color: rgba(8,33,62,.65);
+}
+
+/* ── PARCEIROS ───────────────────────────────────────────────── */
+.parceiros { background: var(--sand); }
+.parceiros-inner { max-width: 1200px; margin: 0 auto; }
+.parceiros-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: 0;
+}
+.parceiro-card {
+  background: var(--white); border-radius: 18px;
+  padding: 32px 28px;
+  border: 1px solid var(--border);
+  transition: all .3s;
+}
+.parceiro-card:hover { box-shadow: 0 12px 40px rgba(8,33,62,.08); transform: translateY(-4px); }
+.parceiro-tag {
+  display: inline-block; padding: 4px 12px; border-radius: 100px;
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.pt-blue   { background: rgba(18,96,170,.1); color: var(--blue); }
+.pt-teal   { background: rgba(32,178,130,.12); color: #0F6E56; }
+.pt-amber  { background: rgba(233,162,59,.15); color: #85500A; }
+.parceiro-h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.parceiro-p  { font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+/* ── CTA FINAL ───────────────────────────────────────────────── */
+.cta-final {
+  background: var(--blue);
+  padding: 100px 5vw;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.cta-h2 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.5vw, 56px);
+  color: #fff; line-height: 1.1; margin-bottom: 20px;
+}
+.cta-h2 em { font-style: italic; color: var(--gold); }
+.cta-sub { font-size: 17px; color: rgba(255,255,255,.6); margin-bottom: 40px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-gold-lg {
+  padding: 17px 36px; border-radius: 14px;
+  background: var(--gold); color: var(--navy);
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  border: none; cursor: pointer;
+  box-shadow: 0 6px 24px rgba(233,162,59,.5);
+  transition: all .25s; text-decoration: none;
+}
+.btn-gold-lg:hover { background: #f0b04a; transform: translateY(-2px); }
+.btn-ghost-lg {
+  padding: 17px 36px; border-radius: 14px;
+  background: rgba(255,255,255,.1); color: #fff;
+  font-family: var(--sans); font-size: 16px; font-weight: 600;
+  border: 1px solid rgba(255,255,255,.2); cursor: pointer;
+  transition: all .25s; text-decoration: none;
+}
+.btn-ghost-lg:hover { background: rgba(255,255,255,.16); }
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer {
+  background: var(--navy);
+  padding: 60px 5vw 36px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand p {
+  font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.7; margin-top: 14px; max-width: 260px;
+}
+.footer-col h4 {
+  font-size: 12px; font-weight: 700; color: rgba(255,255,255,.35);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a {
+  font-size: 13px; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s;
+}
+.footer-col ul li a:hover { color: #fff; }
+.footer-bottom {
+  padding-top: 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.3); }
+.footer-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px;
+  background: rgba(233,162,59,.15); color: var(--gold);
+}
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner      { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right      { display: none; }
+  .stats-inner     { grid-template-columns: repeat(2,1fr); }
+  .como-grid       { grid-template-columns: 1fr; }
+  .pq-grid         { grid-template-columns: 1fr; }
+  .dif-grid        { grid-template-columns: 1fr; }
+  .parceiros-grid  { grid-template-columns: 1fr; }
+  .footer-top      { grid-template-columns: 1fr 1fr; }
+  .nav-links       { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-badge">S</div>
+    <div class="logo-text">
+      <span class="logo-name">SPA Talentos</span>
+      <span class="logo-city">São Pedro da Aldeia · RJ</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#como">Como funciona</a></li>
+    <li><a href="#para-quem">Para quem</a></li>
+    <li><a href="#parceiros">Parceiros</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-outline-nav">Entrar</a>
+    <a href="#" class="btn-solid-nav">Cadastrar grátis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-circle-1"></div>
+    <div class="hero-circle-2"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Plataforma oficial · Secretaria de Desenvolvimento Econômico
+      </div>
+      <h1 class="hero-h1">
+        O seu talento<br/>
+        merece ser <em>visto.</em>
+      </h1>
+      <p class="hero-sub">
+        O ecossistema digital de emprego de São Pedro da Aldeia. 
+        Candidatos, empresas e a Secretaria conectados em um único lugar — 
+        sem papel, sem burocracia, com igualdade para todos.
+      </p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary">
+          Criar meu perfil ↗
+        </a>
+        <a href="#como" class="btn-secondary">
+          Como funciona
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-icon icon-blue">👤</div>
+          <div>
+            <div class="hero-card-title">Para candidatos</div>
+            <div class="hero-card-sub">Crie seu perfil em minutos</div>
+          </div>
+        </div>
+        <div class="hero-card-body">
+          Não tem currículo? O sistema constrói com você. Ninguém fica de fora por falta de documento.
+        </div>
+        <span class="hero-card-tag tag-blue">100% gratuito</span>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-icon icon-gold">🏢</div>
+          <div>
+            <div class="hero-card-title">Para empresas</div>
+            <div class="hero-card-sub">Acesse o banco de talentos local</div>
+          </div>
+        </div>
+        <div class="hero-card-body">
+          Filtre candidatos por habilidade, bairro e experiência. Demonstre interesse com um clique.
+        </div>
+        <span class="hero-card-tag tag-gold">Empresas parceiras</span>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-card-icon icon-teal">📊</div>
+          <div>
+            <div class="hero-card-title">Para a Secretaria</div>
+            <div class="hero-card-sub">Dados reais do mercado local</div>
+          </div>
+        </div>
+        <div class="hero-card-body">
+          Painel com KPIs em tempo real. Quantos se cadastraram, quantos foram contratados, onde estão as lacunas.
+        </div>
+        <span class="hero-card-tag tag-green">Inteligência econômica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Papel envolvido</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Gratuito para candidatos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Perfis no sistema</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">SPA</div>
+      <div class="stat-label">Feito para nossa cidade</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-center reveal">
+      <div class="section-tag">✦ Como funciona</div>
+      <h2 class="section-h2">Três momentos na vida<br/>de quem busca <em>trabalho</em></h2>
+      <p class="section-sub">Simples, digno e igualitário. Você não precisa de nada além de vontade para começar.</p>
+    </div>
+    <div class="como-grid">
+      <div class="como-card reveal">
+        <div class="como-num">1</div>
+        <div class="como-icon-wrap">📝</div>
+        <h3 class="como-h3">Você entra</h3>
+        <p class="como-p">Tem currículo? Importa em PDF. Não tem? O sistema faz perguntas simples e monta o seu perfil completo. <strong>Ninguém fica de fora</strong> por falta de documento.</p>
+        <span class="como-pill">Inclusão total</span>
+      </div>
+      <div class="como-card reveal" style="transition-delay:.1s">
+        <div class="como-num">2</div>
+        <div class="como-icon-wrap">👁️</div>
+        <h3 class="como-h3">Você é visto</h3>
+        <p class="como-p">Empresas parceiras acessam o banco de talentos, filtram por perfil e demonstram interesse. Você recebe uma notificação por e-mail na hora.</p>
+        <span class="como-pill">Sem intermediário</span>
+      </div>
+      <div class="como-card reveal" style="transition-delay:.2s">
+        <div class="como-num">3</div>
+        <div class="como-icon-wrap">🌱</div>
+        <h3 class="como-h3">Você cresce</h3>
+        <p class="como-p">Não foi selecionado desta vez? O sistema mostra cursos do SENAC disponíveis em São Pedro que podem te preparar melhor. Opcional, sem obrigação, sem prioridade extra.</p>
+        <span class="como-pill">No seu tempo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="para-quem" id="para-quem">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-center reveal" style="margin-bottom:40px">
+      <div class="section-tag">✦ Para quem é</div>
+      <h2 class="section-h2">Cada um tem<br/>seu <em>espaço</em> aqui</h2>
+    </div>
+    <div class="pq-grid">
+      <div class="pq-card pq-card-blue reveal">
+        <div class="pq-deco pq-deco-w"></div>
+        <div class="pq-who who-navy"><span class="pq-emoji">👤</span> Candidato</div>
+        <h3 class="pq-h3 pq-h3-white">Você que busca<br/>uma oportunidade.</h3>
+        <ul class="pq-list li-white">
+          <li>Crie seu perfil com ou sem currículo</li>
+          <li>Apareça para todas as empresas parceiras</li>
+          <li>Receba alertas de interesse por e-mail</li>
+          <li>Acesse cursos para se qualificar</li>
+          <li>Sem taxa, sem burocracia, sem papel</li>
+        </ul>
+        <a href="#" class="pq-cta cta-white">Criar meu perfil →</a>
+      </div>
+      <div class="pq-card pq-card-sand reveal" style="transition-delay:.1s">
+        <div class="pq-deco pq-deco-b"></div>
+        <div class="pq-who who-sand"><span class="pq-emoji">🏢</span> Empresa</div>
+        <h3 class="pq-h3 pq-h3-dark">Você que contrata<br/>talentos locais.</h3>
+        <ul class="pq-list li-dark">
+          <li>Acesse o banco de candidatos de SPA</li>
+          <li>Filtre por habilidade, bairro e experiência</li>
+          <li>Publique vagas para candidatos ativos</li>
+          <li>Registre contratações e gere impacto</li>
+          <li>Aprovação pela Secretaria para acesso</li>
+        </ul>
+        <a href="#" class="pq-cta cta-blue">Cadastrar empresa →</a>
+      </div>
+      <div class="pq-card pq-card-blue2 reveal" style="transition-delay:.2s">
+        <div class="pq-deco pq-deco-w"></div>
+        <div class="pq-who who-blue2"><span class="pq-emoji">🏛️</span> Secretaria</div>
+        <h3 class="pq-h3 pq-h3-white">Você que governa<br/>com dados reais.</h3>
+        <ul class="pq-list li-white2">
+          <li>Painel com KPIs em tempo real</li>
+          <li>Aprovação e gestão de empresas</li>
+          <li>Mapa de lacunas de habilidades da cidade</li>
+          <li>Exportação de relatórios em CSV</li>
+          <li>Auditoria completa de todas as ações</li>
+        </ul>
+        <a href="#" class="pq-cta cta-bluew">Acessar painel →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diferenciais">
+  <div class="dif-header reveal">
+    <div class="section-tag" style="background:rgba(233,162,59,.1);color:var(--gold)">✦ Diferenciais</div>
+    <h2 class="section-h2">O que nenhum município<br/>da região <em>fez ainda</em></h2>
+    <p class="section-sub">Fomos além do cadastro. Construímos inteligência econômica real para São Pedro da Aldeia.</p>
+  </div>
+  <div class="dif-grid">
+    <div class="dif-card reveal">
+      <div class="dif-icon dif-icon-gold">📄</div>
+      <div>
+        <h3 class="dif-h3">Currículo gerado pelo sistema</h3>
+        <p class="dif-p">Quem nunca teve currículo na vida responde perguntas simples e sai com um perfil profissional completo. O público que mais precisa do serviço finalmente tem acesso.</p>
+      </div>
+    </div>
+    <div class="dif-card reveal" style="transition-delay:.1s">
+      <div class="dif-icon dif-icon-blue">📊</div>
+      <div>
+        <h3 class="dif-h3">Registro de resultado</h3>
+        <p class="dif-p">Quando a empresa contrata alguém da plataforma, registra no sistema. A Secretaria apresenta ao prefeito: "X empregos formais gerados em São Pedro da Aldeia em 6 meses."</p>
+      </div>
+    </div>
+    <div class="dif-card reveal" style="transition-delay:.15s">
+      <div class="dif-icon dif-icon-teal">🗺️</div>
+      <div>
+        <h3 class="dif-h3">Mapa de lacunas vivo</h3>
+        <p class="dif-p">O sistema cruza o que as empresas pedem com o que os candidatos têm. A Secretaria usa esses dados para decidir quais cursos abrir com o SENAC — dado real, não suposição.</p>
+      </div>
+    </div>
+    <div class="dif-card reveal" style="transition-delay:.2s">
+      <div class="dif-icon dif-icon-purple">📱</div>
+      <div>
+        <h3 class="dif-h3">QR Code nos pontos físicos</h3>
+        <p class="dif-p">CRAS, CREAS, terminal de ônibus. O cidadão que nunca vai acessar um site por conta própria encontra a entrada onde já está — na sua rotina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPIO -->
+<div class="principio">
+  <div class="principio-inner reveal">
+    <div class="principio-label">✦ Nosso princípio central</div>
+    <div class="principio-quote">
+      "Meritocracia é da empresa,<br/>não da plataforma."
+    </div>
+    <p class="principio-sub">
+      A plataforma é neutra. Não ranqueia por curso, certificado ou parceiro. 
+      Um pedreiro com 20 anos de experiência e um jovem com curso técnico 
+      aparecem com o mesmo peso. Quem decide é o RH de cada empresa.
+    </p>
+  </div>
+</div>
+
+<!-- PARCEIROS -->
+<section class="parceiros" id="parceiros">
+  <div class="parceiros-inner">
+    <div class="section-center reveal" style="margin-bottom:48px">
+      <div class="section-tag">✦ Parceiros</div>
+      <h2 class="section-h2">Um ecossistema<br/>para toda a <em>cidade</em></h2>
+      <p class="section-sub">Três instituições que nunca se comunicaram num sistema único — agora com um propósito compartilhado.</p>
+    </div>
+    <div class="parceiros-grid">
+      <div class="parceiro-card reveal">
+        <span class="parceiro-tag pt-blue">🏛️ Gestão pública</span>
+        <h3 class="parceiro-h3">Secretaria de Desenvolvimento Econômico</h3>
+        <p class="parceiro-p">Opera o sistema, aprova empresas, monitora cadastros e toma decisões com inteligência econômica real do município. Fim do papel, início dos dados.</p>
+      </div>
+      <div class="parceiro-card reveal" style="transition-delay:.1s">
+        <span class="parceiro-tag pt-teal">🎓 Formação</span>
+        <h3 class="parceiro-h3">SENAC São Pedro da Aldeia</h3>
+        <p class="parceiro-p">Cadastra cursos disponíveis na cidade. O sistema sugere ao candidato quando faz sentido para o perfil dele — sem obrigação, sem prioridade, no tempo certo.</p>
+      </div>
+      <div class="parceiro-card reveal" style="transition-delay:.2s">
+        <span class="parceiro-tag pt-amber">🏭 Indústria</span>
+        <h3 class="parceiro-h3">FIRJAN São Pedro da Aldeia</h3>
+        <p class="parceiro-p">Informa setores em expansão e alimenta o painel de inteligência da Secretaria. Empresas associadas se cadastram como qualquer outra — sem privilégio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-bg"></div>
+  <div class="cta-inner reveal">
+    <h2 class="cta-h2">
+      São Pedro da Aldeia<br/>merece <em>trabalho de verdade.</em>
+    </h2>
+    <p class="cta-sub">
+      Cadastre seu perfil agora e faça parte do primeiro ecossistema digital de emprego da cidade. É gratuito, é simples e é feito para você.
+    </p>
+    <div class="cta-btns">
+      <a href="#" class="btn-gold-lg">Quero me cadastrar</a>
+      <a href="#" class="btn-ghost-lg">Sou empresa parceira</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="nav-logo" href="#" style="text-decoration:none">
+          <div class="logo-badge">S</div>
+          <div class="logo-text">
+            <span class="logo-name">SPA Talentos</span>
+            <span class="logo-city">São Pedro da Aldeia · RJ</span>
+          </div>
+        </a>
+        <p>O ecossistema digital de emprego e qualificação de São Pedro da Aldeia. Feito com a Secretaria de Desenvolvimento Econômico.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Candidatos</h4>
+        <ul>
+          <li><a href="#">Criar perfil</a></li>
+          <li><a href="#">Buscar vagas</a></li>
+          <li><a href="#">Ver cursos</a></li>
+          <li><a href="#">Meu painel</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresas</h4>
+        <ul>
+          <li><a href="#">Cadastrar empresa</a></li>
+          <li><a href="#">Publicar vaga</a></li>
+          <li><a href="#">Buscar candidatos</a></li>
+          <li><a href="#">Painel empresa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#">Sobre o projeto</a></li>
+          <li><a href="#">Política de privacidade</a></li>
+          <li><a href="#">Termos de uso (LGPD)</a></li>
+          <li><a href="#">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 SPA Talentos · Secretaria de Desenvolvimento Econômico · São Pedro da Aldeia · RJ</span>
+      <span class="footer-badge">Custo zero · Open source</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  }),
+  { threshold: 0.12 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
